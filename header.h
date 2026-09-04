@@ -25,6 +25,6 @@ int operator(char *);
 
 int linklist(char **);
 
-void printfunc();
+void printfunc(Dlist *);
 
-void add(Dlist **);
+int add(Dlist *, Dlist *);

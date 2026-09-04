@@ -40,7 +40,8 @@ int linklist(char **str)
 
         ch = arg1[++i];
     }
-
+    printf("list1: \n");
+    printfunc(head1);
 //list 2...................................................
 
     char *arg2=str[3];
@@ -68,6 +69,8 @@ int linklist(char **str)
 
         chh = arg2[++j];
     }
+    printf("list2: \n");
+    printfunc(head2);
 
 //checking user input operations..........................................
 
@@ -76,27 +79,16 @@ int linklist(char **str)
     switch(c)
     {
         case '+':
-        add(tail1,tail2);
+        if(add(tail1,tail2) != success)
+        {
+            printf("ERROR: final list creation fails\n");
+        }
         break;
 
         case '-':
-        sub(tail1,tail2);
+        //sub(tail1,tail2);
         break;
     }
 
     return success;
-}
-
-
-void printfunc()
-{
-    Dlist *temp = head1;
-
-    printf("head");
-    while(temp!=NULL)
-    {
-        printf("<-%d->",temp->data);
-        temp = temp->next;
-    }
-    printf("Tail\n");
 }
