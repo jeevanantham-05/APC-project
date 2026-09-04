@@ -29,3 +29,5 @@ void printfunc(Dlist *);
 void  printres(Dlist *);
 
 int add(Dlist *, Dlist *);
+
+int sub(Dlist *, Dlist *);
