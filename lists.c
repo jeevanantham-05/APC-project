@@ -81,19 +81,28 @@ int linklist(char **str)
         case '+':
         if(add(tail1,tail2) != success)
         {
-            printf("ERROR: final list creation fails\n");
+            printf("ERROR: add final list creation fails\n");
         }
         break;
 
         case '-':
         if(symbol(str) < 0)
-        {printf("-");
-        sub(tail2,tail1);} 
+        {
+            printf("-");
+            if(sub(tail2,tail1) != success)
+            {
+                 printf("ERROR: sub final list creation fails\n");
+            }
+        } 
         else
-        sub(tail1,tail2);
+        {
+            if(sub(tail1,tail2) != success)
+            {
+                printf("ERROR: sub final list creation fails\n");
+            }
+        }
         break;
     }
-
     return success;
 }
 
@@ -102,6 +111,7 @@ int symbol(char **str)
 {
     char *s1 = str[1];
     char *s2 = str[3];
+    //0012 112
     while( *s1 == '0' && *(s1+1)!='\0') s1++;
     while( *s2 == '0' && *(s2+1)!='\0') s2++;
 
