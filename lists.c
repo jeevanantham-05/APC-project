@@ -111,7 +111,8 @@ int symbol(char **str)
 {
     char *s1 = str[1];
     char *s2 = str[3];
-    //0012 112
+    
+    //skips zeros lhs side 0012 -> '12'
     while( *s1 == '0' && *(s1+1)!='\0') s1++;
     while( *s2 == '0' && *(s2+1)!='\0') s2++;
 
