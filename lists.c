@@ -86,18 +86,10 @@ int linklist(char **str)
         break;
 
         case '-':
-        int op1 = strlen(str[1]);
-        int op2= strlen(str[3]);
-        if(op1>op2)
-        sub(tail1,tail2);
-        else if(op1<op2)
-        sub(tail2,tail1);
-        else{
-            if(strcmp(str[1],str[3]) < 0)
-            sub(tail2,tail1);
-            else
-            sub(tail1,tail2);
-        }
+        if(strcmp(str[1],str[3]) < 0)
+        sub(tail2,tail1,str);
+        else
+        sub(tail1,tail2,str);
         break;
     }
 
