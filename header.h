@@ -30,4 +30,5 @@ void  printres(Dlist *);
 
 int add(Dlist *, Dlist *);
 
-int sub(Dlist *, Dlist *, char **);
+int sub(Dlist *, Dlist *);
+int symbol(char **);

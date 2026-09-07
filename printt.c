@@ -18,9 +18,13 @@ void printfunc(Dlist *head)
 //normal print
 void  printres(Dlist *head)
 {
-    Dlist *temp = head;
-
+    if(head== NULL)
+    {
+        printf("0\n");
+        return;
+    }
     
+    Dlist *temp = head;
     while(temp!=NULL)
     {
         printf("%d",temp->data);

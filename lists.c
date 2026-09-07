@@ -86,12 +86,36 @@ int linklist(char **str)
         break;
 
         case '-':
-        if(strcmp(str[1],str[3]) < 0)
-        sub(tail2,tail1,str);
+        if(symbol(str) < 0)
+        {printf("-");
+        sub(tail2,tail1);} 
         else
-        sub(tail1,tail2,str);
+        sub(tail1,tail2);
         break;
     }
 
     return success;
+}
+
+//comparing digit - or +
+int symbol(char **str)
+{
+    char *s1 = str[1];
+    char *s2 = str[3];
+    while( *s1 == '0' && *(s1+1)!='\0') s1++;
+    while( *s2 == '0' && *(s2+1)!='\0') s2++;
+
+    int ln = strlen(s1);
+    int ln2 = strlen(s2);
+
+    if(ln<ln2)
+    return -1;
+    else if(ln == ln2)
+    {
+        if(s1[0]>s2[0]) return 1;
+        else return -1;
+    }
+    else 
+    return 1;
+
 }
