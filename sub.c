@@ -2,13 +2,12 @@
 #include"header.h"
 
 
-
-
-Dlist *head3 = NULL;
-Dlist *tail3 = NULL;
-
-int sub(Dlist *tail1, Dlist *tail2)
+int sub(Dlist *tail1, Dlist *tail2, int flag)// collecting flag for final sign purpose ('-' , '+') 
 {
+    Dlist *head3 = NULL;
+    Dlist *tail3 = NULL;
+
+
     Dlist *temp1 = tail1; 
     Dlist *temp2 = tail2; 
     int borrow = 0;
@@ -65,6 +64,9 @@ int sub(Dlist *tail1, Dlist *tail2)
         free(temp);
         head3->prev = NULL;
     }
+    printf("result:\n");
+    if(flag)
+    printf("-");
     printres(head3); 
 
     return success;

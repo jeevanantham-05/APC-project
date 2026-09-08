@@ -20,6 +20,11 @@ int linklist(char **str)
 
     while( ch != '\0')
     {
+        if(ch == '-' || ch == '+')
+        {
+            ch = arg1[++i];
+            continue;
+        }
         //create list 1 by performing insert last
         Dlist *opr1 = malloc(sizeof(Dlist));
         if(!opr1) return fail;
@@ -40,8 +45,8 @@ int linklist(char **str)
 
         ch = arg1[++i];
     }
-    printf("list1: \n");
-    printfunc(head1);
+    //`printf("list1: \n");
+    printres(head1);
 //list 2...................................................
 
     char *arg2=str[3];
@@ -49,6 +54,12 @@ int linklist(char **str)
     char chh = arg2[j];
     while( chh != '\0')
     {
+        if(chh == '-' || chh == '+')
+        {
+            chh = arg2[++j];
+            continue;
+        }
+
         //create list 2 by performing insert last
         Dlist *opr2 = malloc(sizeof(Dlist));
         if(!opr2) return fail;
@@ -69,8 +80,8 @@ int linklist(char **str)
 
         chh = arg2[++j];
     }
-    printf("list2: \n");
-    printfunc(head2);
+    //printf("list2: \n");
+    printres(head2);
 
 //checking user input operations..........................................
 
@@ -78,35 +89,55 @@ int linklist(char **str)
     char c = s[0];
     switch(c)
     {
+
+//addition
         case '+':
         if(add(tail1,tail2) != success)
         {
-            printf("ERROR: add final list creation fails\n");
+            printf("ERROR: Addition final list creation fails\n");
         }
         break;
 
+//subraction
         case '-':
+        int flag =0;
         if(symbol(str) < 0)
         {
-            printf("-");
-            if(sub(tail2,tail1) != success)
+            flag =1;
+            if(sub(tail2,tail1,flag) != success)
             {
-                 printf("ERROR: sub final list creation fails\n");
+                 printf("ERROR: Subraction final list creation fails\n");
             }
         } 
         else
         {
-            if(sub(tail1,tail2) != success)
+            if(sub(tail1,tail2,flag) != success)
             {
-                printf("ERROR: sub final list creation fails\n");
+                printf("ERROR: Subraction final list creation fails\n");
             }
+        }
+        break;
+
+//multiplication
+        case 'x':
+        if(mul(tail1,tail2) != success)
+        {
+            printf("ERROR: Multiplication final list creation fails\n");
+        }
+        break;
+
+//Division
+        case '/':
+        if(divv(tail1,tail2) != success)
+        {
+            printf("ERROR: Division final list creation fails\n");
         }
         break;
     }
     return success;
 }
 
-//comparing digit - or +
+//comparing digit greater or lower and flag - or +
 int symbol(char **str)
 {
     char *s1 = str[1];
@@ -123,8 +154,10 @@ int symbol(char **str)
     return -1;
     else if(ln == ln2)
     {
-        if(s1[0]>s2[0]) return 1;
-        else return -1;
+        if(s1[0]>s2[0])
+         return 1;
+        else
+         return -1;
     }
     else 
     return 1;

@@ -21,7 +21,7 @@ typedef struct LIST{
 //function proto-types
 int digit(char *);
 
-int operator(char *);
+int operatorr(char *);
 
 int linklist(char **);
 
@@ -30,5 +30,9 @@ void  printres(Dlist *);
 
 int add(Dlist *, Dlist *);
 
-int sub(Dlist *, Dlist *);
+int sub(Dlist *, Dlist *, int );
 int symbol(char **);
+
+int mul(Dlist *, Dlist *);
+
+int divv(Dlist *, Dlist *);

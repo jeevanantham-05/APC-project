@@ -9,7 +9,7 @@ int main(int count, char *str[]) ///.a.out 1234 + 1234
     {
         if(digit(str[1])==valid) //checking operand 1 digit or not
         {
-            if(operator(str[2])==valid) //checking input valid operator or not
+            if(operatorr(str[2])==valid) //checking input valid operator or not
             {
                 if(digit(str[3])==valid) //checking operand 2 digit or not
                 {
@@ -21,28 +21,34 @@ int main(int count, char *str[]) ///.a.out 1234 + 1234
                     else printf("ERROR: list not created");
 
                 }
-                else printf("ERROR: Operand2 should be integer only\n");
+                else printf("ERROR: Operand2 should be integer only or one sign only allowed\n");
             }
             else printf("ERROR: Invalid operator, valid are \" + - x / \"\n");
 
         }
-        else printf("ERROR: Operand1 should be integer only\n");
+        else printf("ERROR: Operand1 should be integer only or one sign only allowed\n");
     }
     else printf("ERROR: Aruguments should be 'operand1' operator 'operand2'\n");
 }
 
 
-
 /*.....................command line validations..................*/
 
 /*...........Operands validation...........*/
+
 int digit(char str[])
 {
-    int i=0;
+    int i=0,c=0;
  
     while(str[i] != '\0') //checks given aruments all are integer or not
     {
-        if(!isdigit(str[i++])) //if any non integral value found it will execute
+        if(str[i] == '-' || str[i] == '+' && c<1) //allows one sign '-15' and fails '--15'
+        {
+            c++;
+            i++;
+            continue;
+        }
+        else if(!isdigit(str[i++])) //if any non integral value found it will execute
           return invalid;
     }
 
@@ -50,8 +56,9 @@ int digit(char str[])
     return valid;
 }
 
-/*...........Operator validation............*/
-int operator(char *str)
+/*..........................Operator validation........................*/
+
+int operatorr(char *str)
 {
     char *arr[]={"+", "-", "x", "/", NULL}; //valid operators
 

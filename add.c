@@ -1,19 +1,21 @@
 #include<stdio.h>
 #include"header.h"
 
-Dlist *head = NULL;
-Dlist *tail = NULL;
+
 
 int add(Dlist *tail1, Dlist *tail2)
 {
+    Dlist *head = NULL;
+    Dlist *tail = NULL;
+
+
     Dlist *temp1 = tail1;
     Dlist *temp2 = tail2;
-
+    
     int res=0, carry=0;
 
     while(temp1 != NULL || temp2 != NULL || carry==1)
     {
-        
 
         //create final list
         Dlist *final = malloc(sizeof(Dlist));
@@ -79,7 +81,7 @@ int add(Dlist *tail1, Dlist *tail2)
         temp2 = temp2->prev;
     }
 
-    printf("addition result: \n");
+    printf("result: \n");
     printres(head);
     
     return success;
