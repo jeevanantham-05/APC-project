@@ -31,7 +31,7 @@ void  printres(Dlist *);
 
 Dlist* add(Dlist *, Dlist *);
 
-int sub(Dlist *, Dlist *, int );
+Dlist* sub(Dlist *, Dlist *);
 int symbol(char [], char []);
 
 Dlist*  multiplication(Dlist *tail1, Dlist *tail2);

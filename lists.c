@@ -63,19 +63,17 @@ int process(Dlist **tail1, Dlist **tail2, char *str[])
         case '-':
         int flag =0;
         if(symbol(str[1],str[3]) < 0)
-        {
             flag =1;
-            if(sub(*tail2,*tail1,flag) != success)
-            {
-                 printf("ERROR: Subraction final list creation fails\n");
-            }
-        } 
-        else
+        Dlist *Sres = sub(*tail1,*tail2);
+        if( Sres == fail)
         {
-            if(sub(*tail1,*tail2,flag) != success)
-            {
-                printf("ERROR: Subraction final list creation fails\n");
-            }
+            printf("ERROR: Subraction final list creation fails\n");
+        }
+        else{
+            printf("result: ");
+            if(flag)
+            printf("-");
+            printres(Sres); 
         }
         break;
 
@@ -121,14 +119,15 @@ int symbol(char str1[], char str2[])
 
     if(ln<ln2)
     return -1;
-    else if(ln == ln2)
-    {
-        if(s1[0]>s2[0])
-         return 1;
-        else
-         return -1;
-    }
-    else 
+    else if(ln>ln2)
     return 1;
+    else
+    {
+        int cmp = strcmp(s1,s2);
+        if(cmp>0) return 1;
+        else if (cmp<0) return -1;
+        else return 0;
+    }
+
 
 }
