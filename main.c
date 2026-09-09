@@ -13,7 +13,7 @@ int main(int count, char *str[]) ///.a.out 1234 + 1234
                 Dlist *tail1 =NULL;
                 if(insertlast(&head1,&tail1,str[1])==success)
                 {
-                    printf("list1 created success\n");
+                    //printf("list1 created success\n");
                     printres(head1);
                 }
                 else printf("ERROR: list1 not created\n");
@@ -23,7 +23,7 @@ int main(int count, char *str[]) ///.a.out 1234 + 1234
                 Dlist *tail2 =NULL;
                 if(insertlast(&head2,&tail2,str[3])==success)
                 {
-                    printf("list2 created success\n");
+                   // printf("list2 created success\n");
                     printres(head2);
                 }
                 else printf("ERROR: list not created\n");

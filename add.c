@@ -3,7 +3,7 @@
 
 
 
-int add(Dlist *tail1, Dlist *tail2)
+Dlist* add(Dlist *tail1, Dlist *tail2)
 {
     Dlist *head = NULL;
     Dlist *tail = NULL;
@@ -81,9 +81,8 @@ int add(Dlist *tail1, Dlist *tail2)
         temp2 = temp2->prev;
     }
 
-    printf("result: \n");
-    printres(head);
+   
     
-    return success;
+    return head;
 }
 

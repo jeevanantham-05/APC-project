@@ -29,11 +29,11 @@ int process(Dlist **, Dlist **, char *[]);
 void printfunc(Dlist *);
 void  printres(Dlist *);
 
-int add(Dlist *, Dlist *);
+Dlist* add(Dlist *, Dlist *);
 
 int sub(Dlist *, Dlist *, int );
 int symbol(char [], char []);
 
-int mul(Dlist *, Dlist *);
+Dlist*  multiplication(Dlist *tail1, Dlist *tail2);
 
 int divv(Dlist *, Dlist *);

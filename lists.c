@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include"header.h"
 
-
+/*create list by performing insert last*/
 int insertlast(Dlist **head, Dlist **tail, char str[])
 {
     int i=0;
@@ -14,7 +14,7 @@ int insertlast(Dlist **head, Dlist **tail, char str[])
             ch = str[++i];
             continue;
         }
-        //create list 1 by performing insert last
+        
         Dlist *new = malloc(sizeof(Dlist));
         if(!new) return fail;
 
@@ -34,9 +34,7 @@ int insertlast(Dlist **head, Dlist **tail, char str[])
 
         ch = str[++i];
     }
-    //`printf("list1: \n");
     return success;
-
 }
 
 
@@ -50,9 +48,14 @@ int process(Dlist **tail1, Dlist **tail2, char *str[])
     {
     //addition
         case '+':
-        if(add(*tail1,*tail2) != success)
+        Dlist *resl = add(*tail1,*tail2);
+        if( resl == fail )
         {
             printf("ERROR: Addition final list creation fails\n");
+        }
+        else {
+             printf("result: ");
+             printres(resl);
         }
         break;
 
@@ -78,9 +81,15 @@ int process(Dlist **tail1, Dlist **tail2, char *str[])
 
     //multiplication
         case 'x':
-        if(mul(*tail1,*tail2) != success)
+        Dlist *mres = multiplication(*tail1,*tail2);
+          
+        if( mres == fail)
         {
             printf("ERROR: Multiplication final list creation fails\n");
+        }
+        else{
+            printf("result: ");
+           printres(mres);
         }
         break;
 
@@ -97,7 +106,7 @@ int process(Dlist **tail1, Dlist **tail2, char *str[])
 }
 
 
-/*........comparing digit greater or lower and flag - or +.......*/
+/*........ comparing digit greater or lower and flag - or +  .......*/
 int symbol(char str1[], char str2[])
 {
     char *s1 = str1;
