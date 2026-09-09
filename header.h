@@ -23,7 +23,8 @@ int digit(char *);
 
 int operatorr(char *);
 
-int linklist(char **);
+int insertlast(Dlist **, Dlist **, char []);
+int process(Dlist **, Dlist **, char *[]);
 
 void printfunc(Dlist *);
 void  printres(Dlist *);
@@ -31,7 +32,7 @@ void  printres(Dlist *);
 int add(Dlist *, Dlist *);
 
 int sub(Dlist *, Dlist *, int );
-int symbol(char **);
+int symbol(char [], char []);
 
 int mul(Dlist *, Dlist *);
 

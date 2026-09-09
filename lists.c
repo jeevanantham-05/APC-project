@@ -1,147 +1,107 @@
 #include<stdio.h>
 #include"header.h"
 
-/* creating link lists.......................*/
 
-Dlist *head1 = NULL;
-Dlist *tail1 =NULL;
-
-Dlist *head2 = NULL;
-Dlist *tail2 =NULL;
-
-int linklist(char **str)
+int insertlast(Dlist **head, Dlist **tail, char str[])
 {
-
-//list 1........................................................
-
-    char *arg1=str[1];
     int i=0;
-    char ch = arg1[i];
+    char ch = str[i];
 
     while( ch != '\0')
     {
         if(ch == '-' || ch == '+')
         {
-            ch = arg1[++i];
+            ch = str[++i];
             continue;
         }
         //create list 1 by performing insert last
-        Dlist *opr1 = malloc(sizeof(Dlist));
-        if(!opr1) return fail;
+        Dlist *new = malloc(sizeof(Dlist));
+        if(!new) return fail;
 
-        opr1->data = ch - '0';
-        opr1->next = NULL;
+        new->data = ch - '0';
+        new->next = NULL;
 
-        if(head1==NULL)
+        if(*head==NULL)
         {
-            head1=tail1=opr1;
-            opr1->prev =NULL;
+            *head=*tail=new;
+            new->prev =NULL;
         }
         else{
-            tail1->next = opr1;
-            opr1->prev = tail1;
-            tail1 = opr1;
+            (*tail)->next = new;
+            new->prev = *tail;
+            *tail = new;
         }
 
-        ch = arg1[++i];
+        ch = str[++i];
     }
     //`printf("list1: \n");
-    printres(head1);
-//list 2...................................................
+    return success;
 
-    char *arg2=str[3];
-    int j=0;
-    char chh = arg2[j];
-    while( chh != '\0')
-    {
-        if(chh == '-' || chh == '+')
-        {
-            chh = arg2[++j];
-            continue;
-        }
+}
 
-        //create list 2 by performing insert last
-        Dlist *opr2 = malloc(sizeof(Dlist));
-        if(!opr2) return fail;
 
-        opr2->data = chh - '0';
-        opr2->next = NULL;
+/*.........................ARITHEMITC OPERATIONS......................*/
 
-        if(head2==NULL)
-        {
-            head2=tail2=opr2;
-            opr2->prev =NULL;
-        }
-        else{
-            tail2->next = opr2;
-            opr2->prev = tail2;
-            tail2 = opr2;
-        }
-
-        chh = arg2[++j];
-    }
-    //printf("list2: \n");
-    printres(head2);
-
-//checking user input operations..........................................
-
-    char *s = str[2];
-    char c = s[0];
+int process(Dlist **tail1, Dlist **tail2, char *str[])
+{
+    char c = str[2][0];
+    
     switch(c)
     {
-
-//addition
+    //addition
         case '+':
-        if(add(tail1,tail2) != success)
+        if(add(*tail1,*tail2) != success)
         {
             printf("ERROR: Addition final list creation fails\n");
         }
         break;
 
-//subraction
+    //subraction
         case '-':
         int flag =0;
-        if(symbol(str) < 0)
+        if(symbol(str[1],str[3]) < 0)
         {
             flag =1;
-            if(sub(tail2,tail1,flag) != success)
+            if(sub(*tail2,*tail1,flag) != success)
             {
                  printf("ERROR: Subraction final list creation fails\n");
             }
         } 
         else
         {
-            if(sub(tail1,tail2,flag) != success)
+            if(sub(*tail1,*tail2,flag) != success)
             {
                 printf("ERROR: Subraction final list creation fails\n");
             }
         }
         break;
 
-//multiplication
+    //multiplication
         case 'x':
-        if(mul(tail1,tail2) != success)
+        if(mul(*tail1,*tail2) != success)
         {
             printf("ERROR: Multiplication final list creation fails\n");
         }
         break;
 
-//Division
+    //Division
         case '/':
-        if(divv(tail1,tail2) != success)
+        if(divv(*tail1,*tail2) != success)
         {
             printf("ERROR: Division final list creation fails\n");
         }
         break;
+
     }
     return success;
 }
 
-//comparing digit greater or lower and flag - or +
-int symbol(char **str)
+
+/*........comparing digit greater or lower and flag - or +.......*/
+int symbol(char str1[], char str2[])
 {
-    char *s1 = str[1];
-    char *s2 = str[3];
+    char *s1 = str1;
+    char *s2 = str2;
     
     //skips zeros lhs side 0012 -> '12'
     while( *s1 == '0' && *(s1+1)!='\0') s1++;

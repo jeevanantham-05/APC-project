@@ -9,22 +9,36 @@ int main(int count, char *str[]) ///.a.out 1234 + 1234
     {
         if(digit(str[1])==valid) //checking operand 1 digit or not
         {
-            if(operatorr(str[2])==valid) //checking input valid operator or not
-            {
-                if(digit(str[3])==valid) //checking operand 2 digit or not
+                Dlist *head1 = NULL;
+                Dlist *tail1 =NULL;
+                if(insertlast(&head1,&tail1,str[1])==success)
                 {
-                    if(linklist(str)==success) // creating list for 2 operands and implementing arithmetic operations
-                    {
-                        printf("ALL operations done success\n");
-                        
-                    }
-                    else printf("ERROR: list not created");
+                    printf("list1 created success\n");
+                    printres(head1);
+                }
+                else printf("ERROR: list1 not created\n");
+            if(digit(str[3])==valid) //checking operand 2 digit or not
+            {
+                Dlist *head2 = NULL;
+                Dlist *tail2 =NULL;
+                if(insertlast(&head2,&tail2,str[3])==success)
+                {
+                    printf("list2 created success\n");
+                    printres(head2);
+                }
+                else printf("ERROR: list not created\n");
+
+                if(operatorr(str[2])==valid) //checking input valid operator or not
+                {
+                    if(process(&tail1,&tail2,str) == success)
+                    printf("All operation success\n");
+                    else
+                    printf("ERROR: Arthmetics Process fail\n");
 
                 }
-                else printf("ERROR: Operand2 should be integer only or one sign only allowed\n");
+                else printf("ERROR: Invalid operator, valid are \" + - x / \"\n");
             }
-            else printf("ERROR: Invalid operator, valid are \" + - x / \"\n");
-
+            else printf("ERROR: Operand2 should be integer only or one sign only allowed\n");
         }
         else printf("ERROR: Operand1 should be integer only or one sign only allowed\n");
     }
