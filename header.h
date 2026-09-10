@@ -24,16 +24,19 @@ int digit(char *);
 int operatorr(char *);
 
 int insertlast(Dlist **, Dlist **, char []);
+
 int process(Dlist **, Dlist **, char *[]);
 
-void printfunc(Dlist *);
 void  printres(Dlist *);
+int symbol(char [], char []);
+int symbolList(Dlist *, Dlist *);
+Dlist* removezero(Dlist *);
 
 Dlist* add(Dlist *, Dlist *);
 
 Dlist* sub(Dlist *, Dlist *);
-int symbol(char [], char []);
 
-Dlist*  multiplication(Dlist *tail1, Dlist *tail2);
+Dlist*  multiplication(Dlist *, Dlist *);
 
-int divv(Dlist *, Dlist *);
+Dlist* division(Dlist *, Dlist *);
+

@@ -1,26 +1,22 @@
-#include<stdio.h>
-#include"header.h"
+#include <stdio.h>
+#include "header.h"
 
-void  printres(Dlist *head)
+void printres(Dlist *head)
 {
-    if(head== NULL)
-    {
+    if(head == NULL)
+    { 
         printf("0\n");
-        return;
+        return; 
     }
-    
-    /* SKIP ZEROS */ 
-    while(head->next != NULL && head->data == 0)
-    {
-        head = head->next;
-    }
+
+    while(head->next != NULL && head->data == 0) // it will skip more thsan 1 zeros 
+    head = head->next;
 
     Dlist *temp = head;
     while(temp!=NULL)
-    {
-        printf("%d",temp->data);
-        temp = temp->next;
+    { 
+        printf("%d",temp->data); 
+        temp = temp->next; 
     }
     printf("\n");
 }
-

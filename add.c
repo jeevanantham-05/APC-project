@@ -1,88 +1,59 @@
-#include<stdio.h>
-#include"header.h"
-
-
+#include <stdio.h>
+#include <stdlib.h>
+#include "header.h"
 
 Dlist* add(Dlist *tail1, Dlist *tail2)
 {
     Dlist *head = NULL;
-    Dlist *tail = NULL;
-
-
     Dlist *temp1 = tail1;
     Dlist *temp2 = tail2;
-    
+
     int res=0, carry=0;
 
-    while(temp1 != NULL || temp2 != NULL || carry==1)
+    while(temp1 != NULL || temp2 != NULL || carry==1) //temp reach NULL and carry have 1 then add it last as it 
     {
-
-        //create final list
         Dlist *final = malloc(sizeof(Dlist));
-        if(!final) return fail;
+        if(!final) return NULL;
 
-        //this is insert first operations so previous alwasy NULL only
         final->prev = NULL;
-
-/*..........if list 1&2 end but last carry have 1 means directly add in list...... */
-        if(temp1==NULL && temp2 == NULL && carry ==1)
+        if(temp1==NULL && temp2==NULL && carry==1)
         {
             final->data = carry;
-            Dlist *old = head; //backup previous node address
+            final->next = head;
+            if(head) 
+            head->prev = final;
 
-            final->next = old;
             head = final;
-            old->prev = final;
             break;
         }
 
-        //data value storing part
-        if(temp1==NULL)
-        {
-            res = temp2->data + carry;
-        }
+        if(temp1==NULL) 
+        res = temp2->data + carry;
         else if(temp2==NULL)
-        {
-            res = temp1->data + carry;
-        }
-        else
+        res = temp1->data + carry;
+        else 
         res = temp1->data + temp2->data + carry;
 
-        //if res >9 then carry will keep carry value
-        if(res>9) carry = 1;
-        else carry = 0;
+        carry = (res>9) ? 1 : 0; // by using ternry so total > 9 then add 1 to carry
 
-        //taking ryt most one digit in result 
-        res = res%10;
+        res = res%10; // taking last digit, adding to list
 
         final->data = res;
-/*.....................performing insert first operations..............*/
 
-        //Empty list
+        /*...Insert First operation performing here....*/
         if(head==NULL)
         {
-            head = tail = final;
+            head = final;
             final->next = NULL;
         }
         else
         {
-            //list not empty
-            Dlist *old = head; //backup previous node address
-
-            final->next = old;
+            final->next = head;
+            head->prev = final;
             head = final;
-            old->prev = final;
         }
-
-        //updating temp with previous node addres in list1 and 2
-        if(temp1!=NULL)
-        temp1 = temp1->prev;
-        if(temp2!=NULL)
-        temp2 = temp2->prev;
+        if(temp1) temp1 = temp1->prev; //uptating temps with previous node link
+        if(temp2) temp2 = temp2->prev;
     }
-
-   
-    
     return head;
 }
-

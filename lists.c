@@ -61,19 +61,17 @@ int process(Dlist **tail1, Dlist **tail2, char *str[])
 
     //subraction
         case '-':
-        int flag =0;
-        if(symbol(str[1],str[3]) < 0)
-            flag =1;
-        Dlist *Sres = sub(*tail1,*tail2);
-        if( Sres == fail)
+        printf("result: ");
+        if(symbol(str[1], str[3]) < 0)
         {
-            printf("ERROR: Subraction final list creation fails\n");
+            printf("-");
+            Dlist *Sres = sub(*tail2,*tail1);
+            printres(Sres);
+
         }
         else{
-            printf("result: ");
-            if(flag)
-            printf("-");
-            printres(Sres); 
+            Dlist *Sres = sub(*tail1,*tail2);
+            printres(Sres);
         }
         break;
 
@@ -93,9 +91,15 @@ int process(Dlist **tail1, Dlist **tail2, char *str[])
 
     //Division
         case '/':
-        if(divv(*tail1,*tail2) != success)
+        Dlist *Dres = division(*tail1,*tail2);
+          
+        if( Dres == fail)
         {
             printf("ERROR: Division final list creation fails\n");
+        }
+        else{
+            printf("result: ");
+           printres(Dres);
         }
         break;
 
@@ -130,4 +134,57 @@ int symbol(char str1[], char str2[])
     }
 
 
+}
+
+/*Removing L.H.S ide leading zerossss*/
+Dlist* removezero(Dlist *head)
+{
+    while(head!= NULL && head->data == 0 && head->next!= NULL)
+    {
+        Dlist *temp = head;
+        head = head->next;
+        head->prev = NULL;
+        free(temp);
+    }
+    return head;
+}
+
+/*comparsion for which one is higher data..by passing node address .*/
+int symbolList(Dlist *head1, Dlist *head2)
+{
+    head1 = removezero(head1);
+    head2 = removezero(head2);
+
+    int ln=0, ln2=0;
+
+    Dlist *temp = head1;
+    while(temp!= NULL)
+    { 
+        ln++; 
+        temp=temp->next; 
+    }
+    temp = head2;
+    while(temp!= NULL)
+    { 
+        ln2++; 
+        temp=temp->next; 
+    }
+
+    if(ln<ln2) return -1;
+    else if(ln>ln2) return 1;
+    else
+    {
+        Dlist *temp1 = head1;
+        Dlist *temp2 = head2;
+        while(temp1!= NULL)
+        {
+            if(temp1->data > temp2->data) 
+            return 1;
+            if(temp1->data < temp2->data) 
+            return -1;
+            temp1 = temp1->next;
+            temp2 = temp2->next;
+        }
+        return 0;
+    }
 }
