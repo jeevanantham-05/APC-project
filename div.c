@@ -40,25 +40,25 @@ Dlist* division(Dlist *tail1, Dlist *tail2)
     Dlist *tail3 = NULL;
     Dlist *cur = head1; //current
 
-    while(cur!= NULL)
+    while(cur!= NULL) //traverse each digit div 1 by 1
     {
-        if(rem==NULL)
+        if(rem==NULL) //1st time, reminder is empty
         {
             rem = malloc(sizeof(Dlist));
             if(!rem) return NULL;
 
-            rem->data = cur->data;
-            rem->prev = NULL;
+            rem->data = cur->data; //copy 1st digit of divided to reminder
+            rem->prev = NULL; // 1st node this so NULL
             rem->next = NULL;
         }
         else
         {
-            if(rem->data==0 && rem->next==NULL)
+            if(rem->data==0 && rem->next==NULL) // If reminder currently is only 0, don't create new node, just replace 0 with new digit
              rem->data = cur->data;
-            else
+            else    // else remeinder alreadyy some value, so we need bring down next digit
             {
                 Dlist *temp = rem;
-                while(temp->next!= NULL)
+                while(temp->next!= NULL) //traverse to last node
                  temp=temp->next;
 
                 Dlist *new = malloc(sizeof(Dlist));
@@ -70,17 +70,19 @@ Dlist* division(Dlist *tail1, Dlist *tail2)
                 temp->next = new;
             }
         }
-        rem = removezero(rem);
-        int q=0;
-        if(symbolList(rem, head2)>=0)
+        rem = removezero(rem);   //this will do removing leading zeros.........
+        int q=0; //quotient 0 - 9
+
+        if(symbolList(rem, head2)>=0) //true, then we can divid, otherwiese q stay 0
         {
             for(int i=9;i>=1;i--)
             {
                 Dlist *temp1 = head2;
-                while(temp1->next!= NULL)
+                while(temp1->next!= NULL) // Go to tail of divisor, because multiplication starts from tail 
                  temp1=temp1->next;
 
-                int carry=0;
+
+                int carry=0; // Carry for multiplication
                 Dlist *head4 = NULL;
                 while(temp1!= NULL)
                 {
@@ -98,7 +100,7 @@ Dlist* division(Dlist *tail1, Dlist *tail2)
                     if(head4)
                     head4->prev = final;
 
-                    head4 = final;
+                    head4 = final;  // Update head of multiplied list
                     temp1 = temp1->prev; //updating with previous node
                 }
                 if(carry)
@@ -154,9 +156,9 @@ Dlist* division(Dlist *tail1, Dlist *tail2)
         cur = cur->next;
     }
 
-    if(head3==NULL)
+    if(head3==NULL)  // case: if divided < divisor from start, quotient list will  empty
     {
-        Dlist *final = malloc(sizeof(Dlist));
+        Dlist *final = malloc(sizeof(Dlist)); // so create node retorn 0 with that
         if(!final) return NULL;
 
         final->data = 0;

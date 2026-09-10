@@ -43,98 +43,139 @@ int insertlast(Dlist **head, Dlist **tail, char str[])
 int process(Dlist **tail1, Dlist **tail2, char *str[])
 {
     char c = str[2][0];
-    
+
+    int s1 = 1, s2 = 1;
+
+    if(str[1][0]=='-') 
+    s1=-1;
+    else if(str[1][0]=='+') 
+    s1=1;
+    if(str[3][0]=='-') 
+    s2=-1;
+    else if(str[3][0]=='+') 
+    s2=1;
+
+    /*make h1&2 heads point to first so traverse backward*/
+    Dlist *h1 = *tail1; 
+    while(h1->prev)
+     h1=h1->prev;
+
+    Dlist *h2 = *tail2; 
+    while(h2->prev) 
+    h2=h2->prev;
+
+    //passing expression through switch
     switch(c)
     {
-    //addition
         case '+':
-        Dlist *resl = add(*tail1,*tail2);
-        if( resl == fail )
-        {
-            printf("ERROR: Addition final list creation fails\n");
-        }
-        else {
-             printf("result: ");
-             printres(resl);
-        }
-        break;
+            if(s1==1 && s2==1)
+            {
+                Dlist *resl = add(*tail1,*tail2);
+                printf("result: ");
+                printres(resl);
+            }
+            else if(s1==1 && s2==-1) 
+            {
+                printf("result: ");
+                if(symbolList(h1,h2) >=0)
+                { 
+                    Dlist *Sres = sub(*tail1,*tail2); 
+                    printres(Sres); 
+                }
+                else 
+                { 
+                    printf("-"); 
+                    Dlist *Sres = sub(*tail2,*tail1); 
+                    printres(Sres); 
+                }
+            }
+            else if(s1==-1 && s2==1) // -1 + 2
+            {
+                printf("result: ");
+                if(symbolList(h2,h1) >=0) 
+                { 
+                    Dlist *Sres = sub(*tail2,*tail1); 
+                    printres(Sres); 
+                }
+                else 
+                { 
+                    printf("-"); 
+                    Dlist *Sres = sub(*tail1,*tail2); 
+                    printres(Sres); 
+                }
+            }
+            else // -1 + -1
+            {
+                printf("result: -");
+                Dlist *resl = add(*tail1,*tail2);
+                printres(resl);
+            }
+            break;
 
-    //subraction
         case '-':
-        printf("result: ");
-        if(symbol(str[1], str[3]) < 0)
-        {
-            printf("-");
-            Dlist *Sres = sub(*tail2,*tail1);
-            printres(Sres);
+            printf("result: ");
+            if(s1==1 && s2==1)
+            {
+                if(symbolList(h1,h2) < 0) 
+                { 
+                    printf("-"); 
+                    Dlist *Sres = sub(*tail2,*tail1); 
+                    printres(Sres); 
+                }
+                else 
+                { 
+                    Dlist *Sres = sub(*tail1,*tail2); 
+                    printres(Sres);
+                }
+            }
+            else if(s1==1 && s2==-1) // 1 - (-1) => +
+            {
+                Dlist *resl = add(*tail1,*tail2);
+                printres(resl);
+            }
+            else if(s1==-1 && s2==1) // -1 - 1
+            {
+                printf("-");
+                Dlist *resl = add(*tail1,*tail2);
+                printres(resl);
+            }
+            else // -1 - -1
+            {
+                if(symbolList(h2,h1) < 0) 
+                { 
+                    printf("-"); 
+                    Dlist *Sres = sub(*tail1,*tail2); 
+                    printres(Sres); }
+                else 
+                { 
+                    Dlist *Sres = sub(*tail2,*tail1); 
+                    printres(Sres); 
+                }
+            }
+            break;
 
-        }
-        else{
-            Dlist *Sres = sub(*tail1,*tail2);
-            printres(Sres);
-        }
-        break;
-
-    //multiplication
         case 'x':
-        Dlist *mres = multiplication(*tail1,*tail2);
-          
-        if( mres == fail)
-        {
-            printf("ERROR: Multiplication final list creation fails\n");
-        }
-        else{
+            if(s1*s2==-1) 
+            printf("result: -");
+            else
             printf("result: ");
-           printres(mres);
-        }
-        break;
 
-    //Division
+            Dlist *mres = multiplication(*tail1,*tail2);
+            printres(mres);
+            break;
+
         case '/':
-        Dlist *Dres = division(*tail1,*tail2);
-          
-        if( Dres == fail)
-        {
-            printf("ERROR: Division final list creation fails\n");
-        }
-        else{
+            if(s1*s2==-1) 
+            printf("result: -");
+            else 
             printf("result: ");
-           printres(Dres);
-        }
-        break;
-
+            Dlist *Dres = division(*tail1,*tail2);
+            printres(Dres);
+            break;
     }
     return success;
 }
 
-
-/*........ comparing digit greater or lower and flag - or +  .......*/
-int symbol(char str1[], char str2[])
-{
-    char *s1 = str1;
-    char *s2 = str2;
-    
-    //skips zeros lhs side 0012 -> '12'
-    while( *s1 == '0' && *(s1+1)!='\0') s1++;
-    while( *s2 == '0' && *(s2+1)!='\0') s2++;
-
-    int ln = strlen(s1);
-    int ln2 = strlen(s2);
-
-    if(ln<ln2)
-    return -1;
-    else if(ln>ln2)
-    return 1;
-    else
-    {
-        int cmp = strcmp(s1,s2);
-        if(cmp>0) return 1;
-        else if (cmp<0) return -1;
-        else return 0;
-    }
-
-
-}
 
 /*Removing L.H.S ide leading zerossss*/
 Dlist* removezero(Dlist *head)
@@ -152,17 +193,20 @@ Dlist* removezero(Dlist *head)
 /*comparsion for which one is higher data..by passing node address .*/
 int symbolList(Dlist *head1, Dlist *head2)
 {
+    /*first removing leadind zeros by calling remove() functiom*/
     head1 = removezero(head1);
     head2 = removezero(head2);
 
     int ln=0, ln2=0;
 
+    /*counting list 1 and 2 length by traverseing...*/
     Dlist *temp = head1;
     while(temp!= NULL)
     { 
         ln++; 
         temp=temp->next; 
     }
+
     temp = head2;
     while(temp!= NULL)
     { 
@@ -170,6 +214,7 @@ int symbolList(Dlist *head1, Dlist *head2)
         temp=temp->next; 
     }
 
+    //returning final comparision result.....
     if(ln<ln2) return -1;
     else if(ln>ln2) return 1;
     else

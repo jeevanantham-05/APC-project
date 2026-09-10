@@ -28,8 +28,9 @@ int insertlast(Dlist **, Dlist **, char []);
 int process(Dlist **, Dlist **, char *[]);
 
 void  printres(Dlist *);
-int symbol(char [], char []);
+
 int symbolList(Dlist *, Dlist *);
+
 Dlist* removezero(Dlist *);
 
 Dlist* add(Dlist *, Dlist *);

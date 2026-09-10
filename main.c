@@ -1,3 +1,9 @@
+/*
+    I.JEEVANANTHAM
+    26010_108
+    APC _ Project
+*/
+
 #include<stdio.h>
 #include"header.h"
 
@@ -49,30 +55,29 @@ int main(int count, char *str[]) ///.a.out 1234 + 1234
 /*.....................command line validations..................*/
 
 /*...........Operands validation...........*/
-
 int digit(char str[])
 {
-    int i=0,c=0;
- 
-    while(str[i] != '\0') //checks given aruments all are integer or not
+    int i=0;
+    int len = strlen(str);
+    if(len==0) return invalid;
+    if(str[0]=='+'|| str[0]=='-')  //allows one sign '-15' and fails '--15'
     {
-        if(str[i] == '-' || str[i] == '+' && c<1) //allows one sign '-15' and fails '--15'
-        {
-            c++;
-            i++;
-            continue;
-        }
-        else if(!isdigit(str[i++])) //if any non integral value found it will execute
-          return invalid;
+        if(len==1) return invalid;
+        i=1;
     }
-
+    while(str[i]!= '\0') //checks given aruments all are integer or not
+    {
+        if(!isdigit((unsigned char)str[i])) //if any non integral value found it will execute
+            return invalid;
+        i++;
+    }
     //in loop invalid input not found then,
     return valid;
 }
 
 /*..........................Operator validation........................*/
 
-int operatorr(char *str)
+int operatorr(char *str)//if any non integral value found it will execute
 {
     char *arr[]={"+", "-", "x", "/", NULL}; //valid operators
 
